@@ -17,6 +17,8 @@ const zodToJsonSchema = <Target extends Targets = 'jsonSchema7'>(
 } => {
   const refs = getRefs(options);
 
+  console.log('refs: ', refs);
+
   const name =
     typeof options === 'string' ? options
     : options?.nameStrategy === 'title' ? undefined
@@ -56,7 +58,7 @@ const zodToJsonSchema = <Target extends Targets = 'jsonSchema7'>(
     //
     // we have a generous iteration limit here to avoid blowing up the stack if there
     // are any bugs that would otherwise result in us iterating indefinitely
-    for (let i = 0; i < 500; i++) {
+    for (let i = 0; i < 2000; i++) {
       const newDefinitions = Object.entries(refs.definitions).filter(
         ([key]) => !processedDefinitions.has(key),
       );
@@ -73,6 +75,7 @@ const zodToJsonSchema = <Target extends Targets = 'jsonSchema7'>(
       }
     }
 
+    console.log('definitions: ', definitions);
     return definitions;
   })();
 
